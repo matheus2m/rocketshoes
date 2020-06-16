@@ -1,102 +1,41 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { MdAddShoppingCart } from 'react-icons/md';
 import { ProductList } from './styles';
+import api from '../../services/api';
+import { formatPrice } from '../../util/format';
+export default class Home extends Component {
+  state = {
+    products: [],
+  };
+  async componentDidMount() {
+    const response = await api.get('products');
+    const data = response.data.map((product) => ({
+      ...product,
+      priceFormatted: formatPrice(product.price),
+    }));
+    this.setState({ products: data });
+  }
 
-function Home() {
-  return (
-    <ProductList>
-      <li>
-        <img
-          src='https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy/9e34e6901fe742fcbe00aab70149fd38_9366/Tenis_Alphabounce+_Preto_EG1452_01_standard.jpg'
-          alt='tenis'
-        />
-        <strong>Tênis muito legal</strong>
-        <span>R$349,99</span>
+  render() {
+    const { products } = this.state;
 
-        <button>
-          <div>
-            <MdAddShoppingCart size={16} color='#fff' />3{' '}
-          </div>
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src='https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy/9e34e6901fe742fcbe00aab70149fd38_9366/Tenis_Alphabounce+_Preto_EG1452_01_standard.jpg'
-          alt='tenis'
-        />
-        <strong>Tênis muito legal</strong>
-        <span>R$349,99</span>
+    return (
+      <ProductList>
+        {products.map((product) => (
+          <li key={product.id}>
+            <img src={product.image} alt={product.title} />
+            <strong>{product.title}</strong>
+            <span>{product.priceFormatted}</span>
 
-        <button>
-          <div>
-            <MdAddShoppingCart size={16} color='#fff' />3{' '}
-          </div>
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src='https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy/9e34e6901fe742fcbe00aab70149fd38_9366/Tenis_Alphabounce+_Preto_EG1452_01_standard.jpg'
-          alt='tenis'
-        />
-        <strong>Tênis muito legal</strong>
-        <span>R$349,99</span>
-
-        <button>
-          <div>
-            <MdAddShoppingCart size={16} color='#fff' />3{' '}
-          </div>
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src='https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy/9e34e6901fe742fcbe00aab70149fd38_9366/Tenis_Alphabounce+_Preto_EG1452_01_standard.jpg'
-          alt='tenis'
-        />
-        <strong>Tênis muito legal</strong>
-        <span>R$349,99</span>
-
-        <button>
-          <div>
-            <MdAddShoppingCart size={16} color='#fff' />3{' '}
-          </div>
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src='https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy/9e34e6901fe742fcbe00aab70149fd38_9366/Tenis_Alphabounce+_Preto_EG1452_01_standard.jpg'
-          alt='tenis'
-        />
-        <strong>Tênis muito legal</strong>
-        <span>R$349,99</span>
-
-        <button>
-          <div>
-            <MdAddShoppingCart size={16} color='#fff' />3
-          </div>
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src='https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy/9e34e6901fe742fcbe00aab70149fd38_9366/Tenis_Alphabounce+_Preto_EG1452_01_standard.jpg'
-          alt='tenis'
-        />
-        <strong>Tênis muito legal</strong>
-        <span>R$349,99</span>
-
-        <button>
-          <div>
-            <MdAddShoppingCart size={16} color='#fff' />3
-          </div>
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-    </ProductList>
-  );
+            <button>
+              <div>
+                <MdAddShoppingCart size={16} color='#fff' />3
+              </div>
+              <span>ADICIONAR AO CARRINHO</span>
+            </button>
+          </li>
+        ))}
+      </ProductList>
+    );
+  }
 }
-
-export default Home;
