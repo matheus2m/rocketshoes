@@ -22,7 +22,7 @@ export const Container = styled.div`
     padding: 12px 20px;
     font-weight: 20px;
     text-transform: uppercase;
-    transition: background .2s;
+    transition: background 0.2s;
 
     &:hover {
       background: ${darken(0.03, '#7159c1')};
@@ -91,5 +91,18 @@ export const Total = styled.div`
   strong {
     font-size: 28px;
     margin-left: 5px;
+  }
+`;
+
+export const CarrinhoVazio = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+  color: #a7a7a7;
+  min-height: 20vh;
+
+  svg {
+    margin-left: 1rem;
   }
 `;
